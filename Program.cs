@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Shrek2RandomizerMod
 {
@@ -9,6 +10,10 @@ namespace Shrek2RandomizerMod
     {
         static void Main(string[] args)
         {
+            var SH2 = new Shrek2KeyboardForeground();
+
+            if (SH2.Initialize() == false) return;
+
             List<string> cmdLines = new List<string>();
 
             // Add Reset on Characters
@@ -32,6 +37,7 @@ namespace Shrek2RandomizerMod
             }
 
             File.WriteAllLines(Path.Combine(Directory.GetCurrentDirectory(), "SH2Random"), cmdLines);
+            SH2.SendCommand("exec SH2Random");
         }
 
         static string GenerateSkeletalMeshLine(string affectedCharacter, string assignedCharacter) =>
